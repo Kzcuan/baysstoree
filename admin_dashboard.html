@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAYS STOREE - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">BAYS STOREE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#users">
+                            <i class="fas fa-users"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#orders">
+                            <i class="fas fa-shopping-cart"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">
+                            <i class="fas fa-box"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-cog"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="showStoreHistory()">
+                                    <i class="fas fa-images"></i> Store History
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="showStoreInfo()">
+                                    <i class="fas fa-store"></i> Store Information
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="dashboard-header">
+                <h1 class="page-title">Admin Dashboard</h1>
+                <p>Welcome back, <span id="adminName">Admin</span></p>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-title">Total Users</div>
+                        <div class="stats-value" id="totalUsers">0</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-title">Total Orders</div>
+                        <div class="stats-value" id="totalOrders">0</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-title">Total Products</div>
+                        <div class="stats-value" id="totalProducts">0</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-title">Total Revenue</div>
+                        <div class="stats-value" id="totalRevenue">$0</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="section">
+            <h1 class="page-title">Products</h1>
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Product List</h5>
+                    <button class="btn btn-primary" onclick="showProductModal()">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Category</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Users Section -->
+        <section id="users" class="section">
+            <h1 class="page-title">Users</h1>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">User List</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Created At</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="orders" class="section">
+            <h1 class="page-title">Orders</h1>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Order List</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>User</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add/Edit Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="productForm">
+                        <input type="hidden" id="productId">
+                        <div class="mb-3">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="productName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <input type="number" class="form-control" id="productPrice" required min="0" step="0.01">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="productStock" required min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" id="productCategory" required>
+                                <option value="Akun">Akun Game</option>
+                                <option value="Mod Menu">Mod Menu</option>
+                                <option value="Script">Script</option>
+                                <option value="Modder">Modder Akun</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Image URL</label>
+                            <input type="url" class="form-control" id="productImage" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="productDescription" rows="3" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveProductForm()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store History Modal -->
+    <div class="modal fade" id="storeHistoryModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Store History</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <form id="uploadHistoryForm" class="mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md-6">
+                                    <label class="form-label">Upload Image</label>
+                                    <input type="file" class="form-control" id="historyImage" accept="image/*" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Caption</label>
+                                    <input type="text" class="form-control" id="historyCaption" placeholder="Enter caption">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-upload"></i> Upload
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row" id="historyGallery">
+                        <!-- History images will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store Information Modal -->
+    <div class="modal fade" id="storeInfoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Store Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="storeInfoForm">
+                        <div class="mb-3">
+                            <label class="form-label">Store Name</label>
+                            <input type="text" class="form-control" id="storeName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Store Description</label>
+                            <textarea class="form-control" id="storeDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Store Logo</label>
+                            <input type="file" class="form-control" id="storeLogo" accept="image/*">
+                            <div id="currentLogo" class="mt-2"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Contact Email</label>
+                            <input type="email" class="form-control" id="storeEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Contact Phone</label>
+                            <input type="tel" class="form-control" id="storePhone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Social Media Links</label>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text"><i class="fab fa-instagram"></i></span>
+                                <input type="url" class="form-control" id="storeInstagram" placeholder="Instagram URL">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
+                                <input type="url" class="form-control" id="storeWhatsapp" placeholder="WhatsApp URL">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStoreInfo()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Section Management
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.querySelector(`#${sectionId}`).style.display = 'block';
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`a[href="#${sectionId}"]`).classList.add('active');
+        }
+
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = e.currentTarget.getAttribute('href').substring(1);
+                showSection(section);
+            });
+        });
+
+        // Product Management
+        function loadProducts() {
+            const products = getProducts();
+            const tableBody = document.getElementById('productTableBody');
+            tableBody.innerHTML = '';
+
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${product.image}" alt="${product.name}" class="product-image"></td>
+                    <td>${product.name}</td>
+                    <td>${formatPrice(product.price)}</td>
+                    <td>${product.stock}</td>
+                    <td>${product.category}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary me-2" onclick="editProduct('${product.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteProductConfirm('${product.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function showProductModal(productId = null) {
+            const modal = new bootstrap.Modal(document.getElementById('productModal'));
+            if (productId) {
+                const product = getProducts().find(p => p.id === productId);
+                if (product) {
+                    document.getElementById('productId').value = product.id;
+                    document.getElementById('productName').value = product.name;
+                    document.getElementById('productPrice').value = product.price;
+                    document.getElementById('productStock').value = product.stock;
+                    document.getElementById('productCategory').value = product.category;
+                    document.getElementById('productImage').value = product.image;
+                    document.getElementById('productDescription').value = product.description;
+                }
+            } else {
+                document.getElementById('productForm').reset();
+                document.getElementById('productId').value = '';
+            }
+            modal.show();
+        }
+
+        function saveProductForm() {
+            const productData = {
+                id: document.getElementById('productId').value,
+                name: document.getElementById('productName').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                stock: parseInt(document.getElementById('productStock').value),
+                category: document.getElementById('productCategory').value,
+                image: document.getElementById('productImage').value,
+                description: document.getElementById('productDescription').value
+            };
+
+            saveProduct(productData);
+            bootstrap.Modal.getInstance(document.getElementById('productModal')).hide();
+            loadProducts();
+            showToast('Product saved successfully', 'success');
+        }
+
+        function deleteProductConfirm(productId) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                deleteProduct(productId);
+                loadProducts();
+                showToast('Product deleted successfully', 'success');
+            }
+        }
+
+        // User Management
+        function loadUsers() {
+            const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+            const tableBody = document.getElementById('userTableBody');
+            tableBody.innerHTML = '';
+
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${formatDate(user.createdAt)}</td>
+                    <td>${user.lastLogin ? formatDate(user.lastLogin) : 'Never'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="deleteUser('${user.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Order Management
+        function loadOrders() {
+            const orders = getOrders();
+            const tableBody = document.getElementById('orderTableBody');
+            tableBody.innerHTML = '';
+
+            orders.forEach(order => {
+                const user = JSON.parse(localStorage.getItem(USERS_KEY) || '[]')
+                    .find(u => u.id === order.userId);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${user ? user.username : 'Unknown'}</td>
+                    <td>${formatPrice(order.total)}</td>
+                    <td>${order.status}</td>
+                    <td>${formatDate(order.createdAt)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="viewOrder('${order.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Dashboard Statistics
+        function loadStatistics() {
+            const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+            const orders = getOrders();
+            const products = getProducts();
+            
+            document.getElementById('totalUsers').textContent = users.length;
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('totalProducts').textContent = products.length;
+            document.getElementById('totalRevenue').textContent = formatPrice(
+                orders.reduce((total, order) => total + order.total, 0)
+            );
+        }
+
+        // Store History Functions
+        function showStoreHistory() {
+            loadHistoryGallery();
+            const modal = new bootstrap.Modal(document.getElementById('storeHistoryModal'));
+            modal.show();
+        }
+
+        function loadHistoryGallery() {
+            const gallery = document.getElementById('historyGallery');
+            const history = JSON.parse(localStorage.getItem('storeHistory') || '[]');
+            
+            gallery.innerHTML = history.map(item => `
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="${item.image}" class="card-img-top" alt="History Image">
+                        <div class="card-body">
+                            <p class="card-text">${item.caption || ''}</p>
+                            <small class="text-muted">${formatDate(item.date)}</small>
+                            <button class="btn btn-sm btn-danger float-end" onclick="deleteHistoryItem('${item.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('uploadHistoryForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            showLoading();
+            
+            const file = document.getElementById('historyImage').files[0];
+            const caption = document.getElementById('historyCaption').value;
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const history = JSON.parse(localStorage.getItem('storeHistory') || '[]');
+                    const newItem = {
+                        id: Date.now().toString(),
+                        image: e.target.result,
+                        caption: caption,
+                        date: new Date().toISOString()
+                    };
+                    
+                    // Add new item at the beginning of the array
+                    history.unshift(newItem);
+                    localStorage.setItem('storeHistory', JSON.stringify(history));
+                    
+                    // Reload gallery
+                    loadHistoryGallery();
+                    showToast('Image uploaded successfully', 'success');
+                    document.getElementById('uploadHistoryForm').reset();
+                    hideLoading();
+
+                    // Refresh history page if it's open in another tab
+                    localStorage.setItem('historyUpdated', Date.now().toString());
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Listen for history updates
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'historyUpdated') {
+                loadHistoryGallery();
+            }
+        });
+
+        function deleteHistoryItem(id) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                const history = JSON.parse(localStorage.getItem('storeHistory') || '[]');
+                const filtered = history.filter(item => item.id !== id);
+                localStorage.setItem('storeHistory', JSON.stringify(filtered));
+                loadHistoryGallery();
+                showToast('Item deleted successfully', 'success');
+            }
+        }
+
+        // Store Information Functions
+        function showStoreInfo() {
+            const storeInfo = JSON.parse(localStorage.getItem('storeInfo') || '{}');
+            
+            document.getElementById('storeName').value = storeInfo.name || 'BAYS STOREE';
+            document.getElementById('storeDescription').value = storeInfo.description || '';
+            document.getElementById('storeEmail').value = storeInfo.email || '';
+            document.getElementById('storePhone').value = storeInfo.phone || '';
+            document.getElementById('storeInstagram').value = storeInfo.instagram || '';
+            document.getElementById('storeWhatsapp').value = storeInfo.whatsapp || '';
+            
+            if (storeInfo.logo) {
+                document.getElementById('currentLogo').innerHTML = `
+                    <img src="${storeInfo.logo}" alt="Current Logo" style="max-height: 100px">
+                `;
+            }
+
+            const modal = new bootstrap.Modal(document.getElementById('storeInfoModal'));
+            modal.show();
+        }
+
+        async function saveStoreInfo() {
+            const logoFile = document.getElementById('storeLogo').files[0];
+            const storeInfo = {
+                name: document.getElementById('storeName').value,
+                description: document.getElementById('storeDescription').value,
+                email: document.getElementById('storeEmail').value,
+                phone: document.getElementById('storePhone').value,
+                instagram: document.getElementById('storeInstagram').value,
+                whatsapp: document.getElementById('storeWhatsapp').value
+            };
+
+            if (logoFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    storeInfo.logo = e.target.result;
+                    saveStoreInfoToStorage(storeInfo);
+                };
+                reader.readAsDataURL(logoFile);
+            } else {
+                const currentStoreInfo = JSON.parse(localStorage.getItem('storeInfo') || '{}');
+                storeInfo.logo = currentStoreInfo.logo || '';
+                saveStoreInfoToStorage(storeInfo);
+            }
+        }
+
+        function saveStoreInfoToStorage(storeInfo) {
+            localStorage.setItem('storeInfo', JSON.stringify(storeInfo));
+            showToast('Store information updated successfully', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('storeInfoModal')).hide();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!requireAuth('admin')) return;
+
+            const admin = getCurrentAdmin();
+            if (admin) {
+                document.getElementById('adminName').textContent = admin.username;
+            }
+
+            loadStatistics();
+            loadProducts();
+            loadUsers();
+            loadOrders();
+            showSection('dashboard');
+        });
+    </script>
+</body>
+</html> 
